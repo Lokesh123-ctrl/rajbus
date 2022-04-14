@@ -16,6 +16,7 @@ import com.travels.rajbus.entity.User;
 import com.travels.rajbus.model.ServiceStatus;
 import com.travels.rajbus.service.EmailSenderServiceImpl;
 import com.travels.rajbus.service.Userservice;
+import com.travels.rajbus.service.Userserviceimpl;
 
 
 @RestController
@@ -26,25 +27,35 @@ public class UserController {
 	@Autowired
     private EmailSenderServiceImpl emailSenderServiceImpl;
 	@Autowired
-	private Userservice userservice;
+	private Userservice userService;
+	
+	@Autowired
+	private Userserviceimpl userserviceimpl;
 
-	@PostMapping("/saveUser")
-	public ServiceStatus save(@RequestBody User user) {
-		ServiceStatus serviceStatus = new ServiceStatus();
-			if (user.getEmail() == null || user.getEmail().isEmpty()) {
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMesaage("Email cannot be empty");
-			} else if (user.getPassword() == null || user.getPassword().isEmpty()) {
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMesaage("Password cannot be empty");
-			}
-		return serviceStatus;
+	@PostMapping("/createUser")
+	public User createUser(@RequestBody User user) {
+			userService.createUser(user);
+		return user;
+		
 	}
+	
 	@PostMapping("/login")
 	public ServiceStatus validateUser(@RequestParam String username, @RequestParam String password) {
 		ServiceStatus serviceStatus = new ServiceStatus();
 		try {
-			serviceStatus = userservice.validator(username, password);
+//			   if (username != null && password != null) {
+//				   serviceStatus.setStatus("failure");
+//				   serviceStatus.setMesaage("username cannot be empty");
+//			   } else {
+//				   serviceStatus.setStatus("failure");
+//				   serviceStatus.setMesaage("password cannot be empty");
+//			   }
+			serviceStatus = userService.validator(username, password);
+//			serviceStatus.setResult("succesfully");
+    		serviceStatus.setStatus("rajbus sucess");
+    		serviceStatus.setMesaage("rajbus Login Successfully");
+    		serviceStatus.setResult(" Successfully");
+    		return serviceStatus;
 		} catch (Exception e) {
 			e.printStackTrace();
 			serviceStatus.setStatus("failure");
@@ -86,12 +97,7 @@ public class UserController {
 
 			
 		
-		@PostMapping("/createUser")
-	public User createUser(@RequestBody User user) {
-			userservice.createUser(user);
-		return user;
-		
-	}
+	
 
 //	@GetMapping("/getUserByName")
 //	public List<User> findUserByName(@RequestParam String userName) {
@@ -108,20 +114,20 @@ public class UserController {
 	@GetMapping("/getAllUsers")
 	public List<User> findAllStudents() {
 		
-		return (List<User>) userservice.getAllUsers();
+		return (List<User>) userService.getAllUsers();
 		
 	}
 	//updating student details
 	@PutMapping("/updateUser")
 	public User updateStudent(@RequestBody User user) {
 		
-		userservice.updateUser(user);
+		userService.updateUser(user);
 	    return user;
 	}
 	//delete student byId
 	@DeleteMapping("/deleteUser")
 	public String deleteUSer(@RequestParam Long id) {
-		userservice.deleteUser(id);
+		userService.deleteUser(id);
 		return "User has been deleted";
 		
 	}

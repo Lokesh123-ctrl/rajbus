@@ -32,7 +32,7 @@ public class Userserviceimpl  implements Userservice{
 		return (List<User>) userRepository.findAll();
 	}
 
-	@Override
+	@                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Override
 	public void deleteUser(long id) {
 		// TODO Auto-generated method stub
 		userRepository.deleteById(id);
@@ -42,10 +42,6 @@ public class Userserviceimpl  implements Userservice{
 		// TODO Auto-generated method stub
 		return userRepository.findByEmail(email);
 	}
-//	@Override
-//	public User getUserByEmail(String email) {
-//		return userRepository.findByEmail(email);
-//	}
 	@Override
 	public ServiceStatus validator(String email,String password) {
 		
@@ -61,21 +57,30 @@ public class Userserviceimpl  implements Userservice{
 		    	    		return serviceStatus;
 		    	    	} else {
 		    	    		   serviceStatus.setStatus("rajbus failure");
-		    	    		   serviceStatus.setMesaage("Ïnvalid Credentials");
+		    	    		   serviceStatus.setMesaage("failed");
 		    	    		   return serviceStatus;
-		    	    	} 
-		    	    	} 
-		    	    
+		    	    	}
+		    	    	} else {
+		    	    		    serviceStatus.setStatus("failure");
+		    	    		    serviceStatus.setMesaage("failure");
+		    	    			return serviceStatus;
+		    	    		}
+		    	    		
 		    }
 			return serviceStatus;
 		    	    	
-		    	    	}
+	}
+}
+
+		    	    
+		    
+		
 
 
 
 
 		    	    	
-		    	    }
+		    	  
 		    
 		    
 	

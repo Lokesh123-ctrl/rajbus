@@ -7,6 +7,8 @@ import com.travels.rajbus.model.ServiceStatus;
 
 public interface Userservice {
 	
+//	Object user = null;
+
 	public User createUser(User user);
 	
 	public User updateUser(User user);
